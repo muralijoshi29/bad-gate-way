@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-header style="padding:1rem; background-color: rgb(148, 243, 164); font-weight:bolder;font-size: 20px; text-align: left;">
+     Upload Image Document
+    </mat-card-header> 
+    
+    <mat-card-content style="padding:1rem"> 
+ <mat-label style="font-weight: bolder;">Upload image:</mat-label>
+ <br>
+ <br>         
+<div class="form-group">
+    <input type="file"
+           id="file"
+           (change)="handleFileInput($event.target.files)">
+</div>
+<br>
+<div >
+<button  type="button" mat-raised-button color="primary"   (click)="uploadImageFile()">Upload & Extract Data</button> 
+</div>
+</mat-card-content>
+</mat-card>

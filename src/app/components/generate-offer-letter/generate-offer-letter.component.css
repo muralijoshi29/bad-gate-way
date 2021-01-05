@@ -1,0 +1,19 @@
+.example-container {
+    height: 400px;
+    width: 2000px;
+    max-width: 100%;
+    overflow: scroll;
+    
+  }
+
+  table {
+    width: 120%;
+  }
+
+  th{
+    background-color:lightslategray;
+  }
+
+  .row {
+    flex-wrap: unset
+  }

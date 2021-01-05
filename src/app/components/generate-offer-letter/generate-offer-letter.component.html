@@ -1,0 +1,123 @@
+<mat-card>
+  <mat-card-header style="padding:1rem; background-color: rgb(155, 233, 227); font-weight:bolder;font-size: 20px; text-align: left;">
+    Generate Offer Letter:
+</mat-card-header>
+<mat-card-content style="padding:1rem">
+<div>
+    <mat-form-field >
+    <input matInput placeholder="Row Name" 
+    [(ngModel)]="rowName"  >
+</mat-form-field>
+<button  type="button" mat-stroked-button color="primary"   (click)="addNewRow(rowName)">Add Row</button>
+</div>
+<br>
+<div class="example-container mat-elevation-z8">   
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="fieldName">
+      <th mat-header-cell *matHeaderCellDef style="width: 50%;"> Field Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.fieldName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fieldLable">
+      <th mat-header-cell *matHeaderCellDef> Field Lable </th>
+      <td mat-cell *matCellDef="let element" style="width: 20%"> 
+        <mat-form-field>
+          <input matInput [(ngModel)]="element.fieldLable">
+              </mat-form-field>
+    </td>
+        
+    </ng-container>
+  
+    <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef> Index </th>
+      <td mat-cell *matCellDef="let element"> 
+        <mat-form-field style="width: 50%">
+        <input matInput [(ngModel)]="element.index">
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="alignment">
+      <th mat-header-cell *matHeaderCellDef> Alignment </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field style="width: 50%">
+            <mat-select [(ngModel)]="element.alignment" >  
+                                      <mat-option *ngFor="let align of alignmentList"  [value]="align.name">
+                                        {{align.name}}
+                                      </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="fieldType">
+        <th mat-header-cell *matHeaderCellDef> Field Type </th>
+        <td mat-cell *matCellDef="let element">  
+            <mat-form-field style="width: 80%">
+                <mat-select [(ngModel)]="element.fieldType" >  
+                                          <mat-option *ngFor="let fieldType of fieldTypeList"  [value]="fieldType.name">
+                                            {{fieldType.name}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="displayLabel">
+        <th mat-header-cell *matHeaderCellDef> Display Label </th>
+        <td mat-cell *matCellDef="let element"> 
+            <mat-form-field style="width: 40%">
+                <mat-select [(ngModel)]="element.displayLabel" >  
+                                          <mat-option *ngFor="let displayLst of displayList"  [value]="displayLst.value">
+                                            {{displayLst.name}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fieldValue">
+        <th mat-header-cell *matHeaderCellDef> Field Value </th>
+        <td mat-cell *matCellDef="let element" style="width: 80%"> 
+            <mat-form-field style="background-color: snow;">
+              <textarea matInput  [(ngModel)]="element.fieldValue"
+                             columns="6" class="dateVal"></textarea>
+        </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="spaceAfter">
+        <th mat-header-cell *matHeaderCellDef> Space After</th>
+        <td mat-cell *matCellDef="let element"> 
+            <mat-form-field style="width: 40%">
+                <mat-select [(ngModel)]="element.spaceAfter" >  
+                                          <mat-option *ngFor="let displayLst of displayList"  [value]="displayLst.value">
+                                            {{displayLst.name}}
+                                          </mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element; let i = index;">  
+            <button  type="button" mat-stroked-button color="warn" (click)= "deleteResource(i)" class="btn btn-primary btn-sm">Delete</button>  
+        </td>
+      </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;let i = index"></tr>
+  </table>
+</div>
+<div>
+    <form [formGroup]="templeteName">
+        <mat-form-field style="width:30%">
+            <mat-label>Template Id</mat-label>
+            <input matInput disabled placeholder="Template Id" 
+            [(ngModel)]="offerForm.templateId"  formControlName="templateId">
+          </mat-form-field>
+        </form>
+    <button  type="button" mat-raised-button color="primary"   (click)="generatePdf()">Generate PDF</button>   
+</div>
+</mat-card-content>
+  </mat-card>
