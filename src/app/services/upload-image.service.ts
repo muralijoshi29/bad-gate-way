@@ -10,6 +10,9 @@ export class UploadImageService {
   constructor(private http: HttpClient) { }
 
   uploadImageFile(imageFile){
-    return this.http.post(environment.URL+"sla/generate-offer/",imageFile);
+    return this.http.post(environment.OFFERURL+"sla/generate-offer/",imageFile);
+  }
+  chatBotOpen() {
+    return this.http.get(environment.CHATBOTOFFER); 
   }
 }

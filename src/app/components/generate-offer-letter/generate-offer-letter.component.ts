@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import {FormBuilder, FormGroup,FormControl,Validators} from '@angular/forms';
 import { FacadeService} from 'src/app/facade/facade.service';
+import { MatSnackBar } from '@angular/material';
+
+
 
 const offerData = [
   {fieldName: "Company Name", fieldLable: '', index: '', alignment: '',fieldType:'',displayLabel:'',fieldValue:'',spaceAfter:''},
@@ -33,7 +36,10 @@ const displayLable = [{name:"Yes",value:"Y"},{name:"No",value:"N"}];
 
 
 
+
 export class GenerateOfferLetterComponent implements OnInit {
+
+ 
 
 displayedColumns: string[] = ['fieldName', 'fieldLable', 'index', 'alignment','fieldType','displayLabel','fieldValue','spaceAfter','action'];
 
@@ -47,18 +53,37 @@ templeteName: FormGroup;
 offerForm: any = {};
 rowName:String;
 dynamicRow:any;
+listOfferValue: any;
 
-constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,private _facadeService: FacadeService) {
+
+constructor(private route: ActivatedRoute,private formBuilder: FormBuilder,private _facadeService: FacadeService,private _snackBar: MatSnackBar) {
+  this.route.params.subscribe( params => {
+    if (params['id']){
+      this.getOfferBasedOnId(params['id']);
+    } else {
+      this.dataSource = new MatTableDataSource<OfferLetter>(this.offerLetterList);
+    }
+    });
+  
   for(var i=0;i<offerData.length;i++){
     this.offerLetterList.push(offerData[i]); 
 
   }
-  this.dataSource = new MatTableDataSource<OfferLetter>(this.offerLetterList);
+ 
   this.getHeaderDetails();
   
   
 }
 
+getOfferBasedOnId(templeteId) {
+  this._facadeService.getOfferBasedOnId(templeteId).subscribe(data =>{
+    this.listOfferValue = data;
+    console.log("data Value is",this.listOfferValue);
+    this.offerForm.templateId = this.listOfferValue.templateId;
+    this.dataSource = new MatTableDataSource<OfferLetter>(this.listOfferValue.offerConfigurationList)
+    
+  });
+}
 getHeaderDetails() {
   for(var i=0;i<alignmentVal.length;i++){
     this.alignmentList.push(alignmentVal[i]);    
@@ -82,6 +107,12 @@ getHeaderDetails() {
   generatePdf() {
     this.offerForm.offerConfigurationList = this.dataSource.data;
     this._facadeService.generateOfferPdf(this.offerForm).subscribe(data =>{
+      console.log("PDF value is",data);
+  const url= window.URL.createObjectURL(data);
+  window.open(url);
+  this._snackBar.open("Offer Letter has been generated", "Ok", {
+    duration: 5000,
+  });
     });
     console.log("Date Source Value is", this.offerForm);
   }

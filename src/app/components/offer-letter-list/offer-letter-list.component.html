@@ -1,1 +1,22 @@
-<p>offer-letter-list works!</p>
+<mat-card>
+    <mat-card-header style="padding:1rem; background-color: rgb(155, 233, 227); font-weight:bolder;font-size: 20px; text-align: left;">
+        <span style="align-items: left;"><a  mat-menu-item [routerLink]="'/home'"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon></a></span>
+        <span>List Offer Letter:</span>
+        <span class="spacer"></span>
+        <span style="align-items: left;"> <a  mat-menu-item [routerLink]="'/generate-offer'"> Generate Offer Letter </a> </span>
+      </mat-card-header>
+      <mat-card-content>
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              <!-- Position Column -->
+              <ng-container matColumnDef="templeteId">
+                <mat-header-cell *matHeaderCellDef> Templete Id </mat-header-cell>
+                <mat-cell *matCellDef="let element"> <a [routerLink]="['/generate-offer/',element.templateId]"> {{element.templateId}} </a></mat-cell>
+              </ng-container>
+              <!-- Name Column -->     
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </mat-card-content>
+  
+  </mat-card>
+  

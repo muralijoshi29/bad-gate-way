@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  URL : "http://localhost:18083/offer-letter/",
+  OFFERURL : "http://localhost:8081/",
+  INSURANCEURL: "http://localhost:8761/insurance/",
+  LICSENCEOFFER: "http://localhost:8088/",
+  CHATBOTOFFER: "http://localhost:8080/"
 };
 
 /*

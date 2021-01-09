@@ -1,0 +1,37 @@
+<mat-card>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <!--  <span>HOME</span> -->
+      <span><a id="link1" [routerLink]="" (click)='logOut()' >Log Out</a></span>
+      <span class="spacer"></span>
+       <div>Logged as: <span style="color: greenyellow">{{logginUser}}</span></div>
+       &nbsp;
+       <div>Device Type: <span style="color: greenyellow">{{deviceType}}</span></div>
+       &nbsp;
+       <div>OS: <span style="color: greenyellow">{{syaOS}}</span></div>
+       &nbsp;
+       <div>Browser:<span style="color: greenyellow">{{browser}}</span></div>
+    </mat-toolbar-row>
+ </mat-toolbar>   
+    <mat-card-content>
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!-- Position Column -->
+            <ng-container matColumnDef="username">
+              <mat-header-cell *matHeaderCellDef> UserName </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.userName}} </mat-cell>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                  <span *ngIf = "element.active == 'Y'" style="color: green;">Online</span>
+                  <span *ngIf = "element.active == 'N'" style="color: red;">Offline</span>
+                  </mat-cell>
+            </ng-container>
+                 
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </mat-card-content>
+
+</mat-card>
